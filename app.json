@@ -1,0 +1,45 @@
+{
+  "expo": {
+    "name": "Agenda Geek",
+    "slug": "agenda-geek-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    
+    
+    "splash": {
+      
+      "image": "./assets/images/joca-splash.jpg", 
+      "resizeMode": "contain",
+      "backgroundColor": "#2F67E6" 
+    },
+    
+
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "splash": {
+        "image": "./assets/images/joca-splash.jpg", 
+        "resizeMode": "contain",
+        "backgroundColor": "#2F67E6"
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#2F67E6"
+      },
+      "package": "com.agendageek.app", 
+      "splash": {
+        "image": "./assets/images/joca-splash.jpg", 
+        "resizeMode": "contain",
+        "backgroundColor": "#2F67E6"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
