@@ -30,8 +30,7 @@ export default function HomeScreen() {
           <Text style={styles.headerTitle}>Agenda Geek</Text>
         </View>
         <View style={styles.headerRight}>
-          
-          {/* Ícone de Notificações (Já conectado, se você fez o passo anterior) */}
+          {/* Ícone de Notificações */}
           <TouchableOpacity 
             style={styles.iconContainer}
             onPress={() => router.push('notifications')}
@@ -39,7 +38,7 @@ export default function HomeScreen() {
             <Feather name="bell" size={24} color="#fff" />
           </TouchableOpacity>
 
-          {/* ÍCONE DE CRIAÇÃO DE EVENTO (AGORA CONECTADO) */}
+          {/* Ícone de Criação de Evento */}
           <TouchableOpacity 
             style={styles.iconContainer}
             onPress={() => router.push('create-event')} 
@@ -53,14 +52,15 @@ export default function HomeScreen() {
         </View>
       </View>
       
-      {/* 3. CONTEÚDO PRINCIPAL (Permite Scroll) */}
+      {/* 3. CONTEÚDO PRINCIPAL */}
       <ScrollView style={styles.contentScroll} contentContainerStyle={styles.contentPadding}>
 
         {/* SEÇÃO DE FILTROS */}
         <View style={styles.filtersContainer}>
           <View style={styles.filterTitleRow}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Feather name="funnel" size={18} color="#333" />
+                {/* Ícone corrigido de “filter” */}
+                <Feather name="filter" size={18} color="#333" />
                 <Text style={styles.filterTitleText}>Filtros</Text>
             </View>
             <Text style={styles.filterCityText}>Maceió</Text>
@@ -71,7 +71,7 @@ export default function HomeScreen() {
           </View>
         </View>
         
-        {/* ESPAÇO DO FEED - CARDS DE EVENTOS */}
+        {/* FEED - CARDS DE EVENTOS */}
         <EventCard />
         <EventCard />
         <EventCard />
