@@ -5,40 +5,45 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
+
+    "icon": "./assets/images/jocasp.png",
+
     "splash": {
-      "image": "./assets/images/joca-splash.jpg",
+      "image": "./assets/images/jocasp.png",
       "resizeMode": "contain",
       "backgroundColor": "#2F67E6"
     },
+
     "assetBundlePatterns": [
       "**/*"
     ],
+
     "ios": {
       "supportsTablet": true,
       "splash": {
-        "image": "./assets/images/joca-splash.jpg",
+        "image": "./assets/images/jocasp.png",
         "resizeMode": "contain",
         "backgroundColor": "#2F67E6"
       }
     },
+
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#2F67E6"
-      },
       "package": "com.agendageek.app",
       "splash": {
-        "image": "./assets/images/joca-splash.jpg",
+        "image": "./assets/images/jocasp.png",
         "resizeMode": "contain",
         "backgroundColor": "#2F67E6"
       }
     },
+
     "web": {
       "favicon": "./assets/favicon.png"
     },
+
     "plugins": [
       "expo-font",
-      "expo-router"
+      "expo-router",
+      "expo-web-browser"
     ]
   }
 }
