@@ -1,144 +1,135 @@
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-import { Stack, router } from 'expo-router';
-import React from 'react';
-import {
-    SafeAreaView,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
-} from 'react-native';
+import { router } from 'expo-router';
 
-// Cor principal (azul) do seu projeto
-const PRIMARY_COLOR = '#2F67E6'; 
+const PRIMARY_COLOR = '#2F67E6';
 
-export default function CreateEventScreen() {
-  
-  const handleGoBack = () => {
-    // Volta para a tela anterior (Home ou Explorar)
-    router.back(); 
+export default function EventCard({ event }) {
+  // Estado para o favorito
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  // Alterna o estado ao clicar no coração
+  const toggleFavorite = () => {
+    setIsFavorite(!isFavorite);
   };
-  
+
   return (
-    <SafeAreaView style={styles.container}>
-      
-      {/* Configuração do Cabeçalho com o botão Voltar */}
-      <Stack.Screen 
-        options={{ 
-          title: 'Criar Novo Evento',
-          headerTitleAlign: 'center',
-          headerStyle: { backgroundColor: PRIMARY_COLOR },
-          headerTintColor: '#fff', // Cor do texto e ícones
-          
-          // Botão de Voltar Personalizado:
-          headerLeft: () => (
-            <TouchableOpacity onPress={handleGoBack} style={{ marginLeft: 5 }}>
-              <Feather name="chevron-left" size={28} color="#fff" />
-            </TouchableOpacity>
-          ),
-          // Botão Direito (Opcional, ex: Publicar)
-          headerRight: () => (
-            <TouchableOpacity onPress={() => alert('Evento Pronto para Publicar!')} style={{ marginRight: 5 }}>
-              <Feather name="send" size={24} color="#fff" />
-            </TouchableOpacity>
-          ),
-        }} 
+    <TouchableOpacity
+      style={styles.card}
+      activeOpacity={0.9}
+      onPress={() => router.push(`/details?eventId=${event?.id}`)}
+    >
+      {/* Imagem do evento */}
+      <Image
+        source={{ uri: event?.image || 'https://via.placeholder.com/400x200.png?text=Evento' }}
+        style={styles.image}
       />
-      
-      <ScrollView style={styles.contentScroll} contentContainerStyle={styles.contentPadding}>
 
-        <Text style={styles.sectionTitle}>DETALHES DO EVENTO</Text>
-
-        {/* Campos de Formulário */}
-        <TextInput style={styles.input} placeholder="Nome do Evento" />
-        <TextInput 
-          style={[styles.input, styles.textArea]} 
-          placeholder="Descrição detalhada do evento" 
-          multiline={true}
-          numberOfLines={4}
+      {/* Ícone de favorito */}
+      <TouchableOpacity style={styles.favoriteButton} onPress={toggleFavorite}>
+        <Feather
+          name="heart"
+          size={26}
+          color={isFavorite ? 'red' : '#ccc'}
+          fill={isFavorite ? 'red' : 'none'}
         />
-        <TextInput style={styles.input} placeholder="Data e Hora (ex: 05/10/2026, 10:00)" />
-        <TextInput style={styles.input} placeholder="Local (ex: Centro de Convenções Maceió)" />
-        <TextInput style={styles.input} placeholder="Preço (ex: GRÁTIS ou R$ 50,00)" />
-        
-        {/* Botão de Adicionar Foto */}
-        <TouchableOpacity style={styles.photoButton}>
-          <Feather name="camera" size={24} color="#fff" />
-          <Text style={styles.photoButtonText}>ADICIONAR CAPA DO EVENTO</Text>
-        </TouchableOpacity>
+      </TouchableOpacity>
 
-        {/* Botão Principal de Ação */}
-        <TouchableOpacity style={styles.publishButton}>
-            <Text style={styles.publishButtonText}>REVISAR E PUBLICAR</Text>
-        </TouchableOpacity>
+      <View style={styles.info}>
+        <Text style={styles.title}>{event?.title || 'Cultura Nerd 2025'}</Text>
+        <Text style={styles.description}>
+          {event?.description ||
+            'Serão dois dias de programação local e nacional. Uma festa para vivenciar a maior experiência Geek!'}
+        </Text>
 
-        <View style={{ height: 50 }} />
-      </ScrollView>
-      
-    </SafeAreaView>
+        <View style={styles.details}>
+          <View style={styles.detailItem}>
+            <Feather name="calendar" size={16} color="#555" />
+            <Text style={styles.detailText}>05/10/2025, 10:00</Text>
+          </View>
+
+          <View style={styles.detailItem}>
+            <Feather name="map-pin" size={16} color="#555" />
+            <Text style={styles.detailText}>CENTRO DE CONVENÇÕES MACEIÓ</Text>
+          </View>
+
+          <View style={styles.detailItem}>
+            <Feather name="users" size={16} color="#555" />
+            <Text style={styles.detailText}>Até 500 pessoas</Text>
+          </View>
+        </View>
+
+        <View style={styles.footer}>
+          <Text style={styles.freeBadge}>GRÁTIS</Text>
+        </View>
+      </View>
+    </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1, 
-    backgroundColor: '#fff', 
-  },
-  contentScroll: {
-    flex: 1, 
-    backgroundColor: '#f5f5f5', 
-  },
-  contentPadding: {
-    padding: 20,
-  },
-  sectionTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: PRIMARY_COLOR,
-    marginTop: 10,
-    marginBottom: 15,
-  },
-  input: {
+  card: {
     backgroundColor: '#fff',
-    padding: 15,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#ddd',
+    borderRadius: 12,
     marginBottom: 15,
-    fontSize: 16,
+    overflow: 'hidden',
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    shadowOffset: { width: 0, height: 2 },
   },
-  textArea: {
-    height: 100,
-    textAlignVertical: 'top',
+  image: {
+    width: '100%',
+    height: 160,
   },
-  photoButton: {
-    backgroundColor: PRIMARY_COLOR,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+  favoriteButton: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    backgroundColor: '#fff',
+    borderRadius: 50,
+    padding: 6,
+    elevation: 4,
+  },
+  info: {
     padding: 15,
-    borderRadius: 8,
-    marginTop: 10,
-    marginBottom: 25,
   },
-  photoButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginLeft: 10,
-  },
-  publishButton: {
-    backgroundColor: '#1E46A0', 
-    padding: 15,
-    borderRadius: 8,
-    alignItems: 'center',
-    marginTop: 20,
-  },
-  publishButtonText: {
-    color: '#fff',
+  title: {
     fontSize: 18,
     fontWeight: 'bold',
-  }
+    color: '#333',
+  },
+  description: {
+    color: '#666',
+    marginTop: 6,
+    marginBottom: 10,
+  },
+  details: {
+    marginTop: 5,
+  },
+  detailItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+  detailText: {
+    marginLeft: 6,
+    color: '#555',
+  },
+  footer: {
+    marginTop: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  freeBadge: {
+    backgroundColor: '#DFFFD8',
+    color: 'green',
+    fontWeight: 'bold',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 6,
+    fontSize: 13,
+  },
 });
