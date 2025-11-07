@@ -4,14 +4,14 @@
     "slug": "agenda-geek-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "dark",
 
-    "icon": "./assets/images/jocasp.png",
+    "icon": "./assets/images/splashsp .png",
 
     "splash": {
-      "image": "./assets/images/jocasp.png",
+      "image": "./assets/images/splashsp .png",
       "resizeMode": "contain",
-      "backgroundColor": "#2F67E6"
+      "backgroundColor": "#0000ff"
     },
 
     "assetBundlePatterns": [
@@ -21,7 +21,7 @@
     "ios": {
       "supportsTablet": true,
       "splash": {
-        "image": "./assets/images/jocasp.png",
+        "image": "./assets/images/splashsp .png",
         "resizeMode": "contain",
         "backgroundColor": "#2F67E6"
       }
@@ -30,7 +30,7 @@
     "android": {
       "package": "com.agendageek.app",
       "splash": {
-        "image": "./assets/images/jocasp.png",
+        "image": "./assets/images/splashsp .png",
         "resizeMode": "contain",
         "backgroundColor": "#2F67E6"
       }
