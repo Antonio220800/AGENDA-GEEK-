@@ -1,81 +1,61 @@
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-const PRIMARY_COLOR = '#2F67E6';
+export default function EventCard({ event }) {
+  const [isFavorite, setIsFavorite] = useState(false);
 
-export default function EventCard() {
-  // Dados simulados do evento
-  const eventData = {
-    id: 1,
-    title: "Cultura Nerd 2025",
-    price: "GRÁTIS",
-    description:
-      "Serão dois dias de programação local e nacional. Uma festa para vivenciar a maior experiência Geek que você já experimentou!",
-    date: "05/10/2025, 10:00",
-    location: "CENTRO DE CONVENÇÕES MACEIÓ",
-    capacity: "Até 500 pessoas",
-    ticketType: "Entrada livre", // Novo campo
-    organizer: "Geek Maceió Produções", // Novo campo
-    image:
-      "https://via.placeholder.com/350x150/0000FF/FFFFFF?text=FESTIVAL+DA+CULTURA+NERD",
-  };
-
-  const handlePress = () => {
-    router.push({
-      pathname: "details",
-      params: { eventTitle: eventData.title },
-    });
+  const toggleFavorite = () => {
+    setIsFavorite(!isFavorite);
   };
 
   return (
-    <TouchableOpacity style={styles.card} onPress={handlePress}>
-      {/* IMAGEM */}
-      <View>
-        <Image source={{ uri: eventData.image }} style={styles.cardImage} />
-        <TouchableOpacity style={styles.favoriteIcon}>
-          <Feather name="heart" size={20} color="#fff" />
-        </TouchableOpacity>
-      </View>
+    <TouchableOpacity
+      style={styles.card}
+      activeOpacity={0.9}
+      onPress={() => router.push(`/details?eventId=${event?.id}`)}
+    >
+      <Image
+        source={{ uri: event?.image || 'https://via.placeholder.com/400x200.png?text=Evento' }}
+        style={styles.image}
+      />
 
-      {/* CONTEÚDO */}
-      <View style={styles.cardBody}>
-        {/* Título e Preço */}
-        <View style={styles.titleRow}>
-          <Text style={styles.eventTitle} numberOfLines={1}>
-            {eventData.title}
-          </Text>
-          <Text style={styles.eventPrice}>{eventData.price}</Text>
-        </View>
+      <TouchableOpacity style={styles.favoriteButton} onPress={toggleFavorite}>
+        <Feather
+          name="heart"
+          size={26}
+          color={isFavorite ? 'red' : '#ccc'}
+        />
+      </TouchableOpacity>
 
-        {/* Descrição */}
-        <Text style={styles.eventDescription} numberOfLines={3}>
-          {eventData.description}
+      <View style={styles.info}>
+        <Text style={styles.title}>{event?.title || 'Cultura Nerd 2025'}</Text>
+
+        <Text style={styles.description}>
+          {event?.description ||
+            'Serão dois dias de programação local e nacional. Uma festa para vivenciar a maior experiência Geek!'}
         </Text>
 
-        {/* Detalhes */}
-        <View style={styles.detailsRow}>
-          <Feather name="calendar" size={14} color="#666" />
-          <Text style={styles.detailText}>{eventData.date}</Text>
-        </View>
-        <View style={styles.detailsRow}>
-          <Feather name="map-pin" size={14} color="#666" />
-          <Text style={styles.detailText}>{eventData.location}</Text>
-        </View>
-        <View style={styles.detailsRow}>
-          <Feather name="users" size={14} color="#666" />
-          <Text style={styles.detailText}>{eventData.capacity}</Text>
+        <View style={styles.details}>
+          <View style={styles.detailItem}>
+            <Feather name="calendar" size={16} color="#555" />
+            <Text style={styles.detailText}>05/10/2025, 10:00</Text>
+          </View>
+
+          <View style={styles.detailItem}>
+            <Feather name="map-pin" size={16} color="#555" />
+            <Text style={styles.detailText}>CENTRO DE CONVENÇÕES MACEIÓ</Text>
+          </View>
+
+          <View style={styles.detailItem}>
+            <Feather name="users" size={16} color="#555" />
+            <Text style={styles.detailText}>Até 500 pessoas</Text>
+          </View>
         </View>
 
-        {/* NOVOS CAMPOS */}
-        <View style={styles.detailsRow}>
-          <Feather name="ticket" size={14} color="#666" />
-          <Text style={styles.detailText}>Tipo de ingresso: {eventData.ticketType}</Text>
-        </View>
-        <View style={styles.detailsRow}>
-          <Feather name="user" size={14} color="#666" />
-          <Text style={styles.detailText}>Organizador: {eventData.organizer}</Text>
+        <View style={styles.footer}>
+          <Text style={styles.freeBadge}>GRÁTIS</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -85,65 +65,65 @@ export default function EventCard() {
 const styles = StyleSheet.create({
   card: {
     backgroundColor: '#fff',
-    borderRadius: 8,
+    borderRadius: 12,
+    marginBottom: 15,
     overflow: 'hidden',
-    marginBottom: 20,
     elevation: 3,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
-    shadowRadius: 4,
+    shadowRadius: 5,
+    shadowOffset: { width: 0, height: 2 },
   },
-  cardImage: {
+  image: {
     width: '100%',
-    height: 180,
+    height: 160,
   },
-  favoriteIcon: {
+  favoriteButton: {
     position: 'absolute',
     top: 10,
     right: 10,
-    backgroundColor: 'rgba(0,0,0,0.4)',
-    borderRadius: 15,
-    padding: 5,
+    backgroundColor: '#fff',
+    borderRadius: 50,
+    padding: 6,
+    elevation: 4,
   },
-  cardBody: {
+  info: {
     padding: 15,
   },
-  titleRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 8,
-  },
-  eventTitle: {
+  title: {
     fontSize: 18,
     fontWeight: 'bold',
     color: '#333',
-    flex: 1,
-    marginRight: 10,
   },
-  eventPrice: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: 'green',
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: 5,
-    backgroundColor: '#E6FFE6',
-  },
-  eventDescription: {
-    fontSize: 14,
+  description: {
     color: '#666',
+    marginTop: 6,
     marginBottom: 10,
   },
-  detailsRow: {
+  details: {
+    marginTop: 5,
+  },
+  detailItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 5,
+    marginBottom: 4,
   },
   detailText: {
+    marginLeft: 6,
+    color: '#555',
+  },
+  footer: {
+    marginTop: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  freeBadge: {
+    backgroundColor: '#DFFFD8',
+    color: 'green',
+    fontWeight: 'bold',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 6,
     fontSize: 13,
-    color: '#666',
-    marginLeft: 8,
   },
 });
