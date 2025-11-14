@@ -2,18 +2,18 @@ import { Feather } from '@expo/vector-icons';
 import { Stack, router } from 'expo-router';
 import React, { useState } from 'react';
 import {
+  LayoutAnimation,
   Platform,
+  Pressable,
+  Platform as RNPlatform,
   SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
-  Pressable,
-  LayoutAnimation,
   UIManager,
-  Platform as RNPlatform,
+  View,
 } from 'react-native';
 
 import EventCard from '../../components/EventCard';
@@ -47,9 +47,12 @@ export default function HomeScreen() {
 
       <View style={styles.header}>
         <View style={styles.headerLeft}>
-          <Feather name="user" size={24} color="#fff" style={{ marginRight: 10 }} />
-          <Text style={styles.headerTitle}>Agenda Geek</Text>
-        </View>
+  <TouchableOpacity onPress={() => router.push('profile')}>
+    <Feather name="user" size={24} color="#fff" style={{ marginRight: 10 }} />
+  </TouchableOpacity>
+  <Text style={styles.headerTitle}>Agenda Geek</Text>
+</View>
+
 
         <View style={styles.headerRight}>
           <TouchableOpacity
